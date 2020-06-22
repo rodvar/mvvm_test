@@ -9,8 +9,8 @@ import dagger.android.ContributesAndroidInjector
 abstract class ActivityFragmentModule {
 
     @ContributesAndroidInjector
-    abstract fun bindMainActivity(): MainActivity
+    abstract fun contributesMainActivity(): MainActivity
 
     @ContributesAndroidInjector
-    abstract fun bindOrderTicketFragment(): OrderTicketFragment
+    abstract fun contributesOrderTicketFragment(): OrderTicketFragment
 }
