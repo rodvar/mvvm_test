@@ -12,11 +12,6 @@ Clone this repository into your local machine and open in your Android Studio.
 - Compile SDK 29
 - Build tool 29.0.3
 
-* You may need to add a couple of properties to support Androidx for third part libraries in your gradle.properties:
-```
-android.useAndroidX=true
-android.enableJetifier=true
-```
 
 ### Dependencies
 Most of dependencies likely to use are already added but you can freely add dependencies to build.gradle file if you need.
