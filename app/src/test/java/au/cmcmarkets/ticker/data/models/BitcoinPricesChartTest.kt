@@ -39,4 +39,30 @@ class BitcoinPricesChartTest {
             )
         )
     }
+
+    @Test(expected = BitcoinPricesChart.PriceUnavailableException::class)
+    fun `spread call with no data throws prices not available exception`() {
+        val bitcoinPricesChart = BitcoinPricesChart(
+            BitcoinPricesChartDTO()
+        )
+        bitcoinPricesChart.spread(BitcoinPricesChart.UK_KEY) == BigDecimal(124.32).subtract(
+            BigDecimal(123.32)
+        )
+    }
+
+    @Test(expected = BitcoinPricesChart.PriceUnavailableException::class)
+    fun `buy call with no data throws prices not available exception`() {
+        val bitcoinPricesChart = BitcoinPricesChart(
+            BitcoinPricesChartDTO()
+        )
+        bitcoinPricesChart.buy(BitcoinPricesChart.UK_KEY) == BigDecimal(1)
+    }
+
+    @Test(expected = BitcoinPricesChart.PriceUnavailableException::class)
+    fun `sell call with no data throws prices not available exception`() {
+        val bitcoinPricesChart = BitcoinPricesChart(
+            BitcoinPricesChartDTO()
+        )
+        bitcoinPricesChart.sell(BitcoinPricesChart.UK_KEY) == BigDecimal(1)
+    }
 }
