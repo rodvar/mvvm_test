@@ -5,6 +5,8 @@ import au.cmcmarkets.ticker.core.di.module.ActivityFragmentModule
 import au.cmcmarkets.ticker.core.di.module.AppModule
 import au.cmcmarkets.ticker.core.di.module.NetworkModule
 import au.cmcmarkets.ticker.core.di.module.ViewModelModule
+import au.cmcmarkets.ticker.data.di.DataModule
+import au.cmcmarkets.ticker.service.di.ServiceModule
 import dagger.Component
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
@@ -16,6 +18,8 @@ import javax.inject.Singleton
         AndroidSupportInjectionModule::class,
         AppModule::class,
         NetworkModule::class,
+        ServiceModule::class,
+        DataModule::class,
         ActivityFragmentModule::class,
         ViewModelModule::class
     ]

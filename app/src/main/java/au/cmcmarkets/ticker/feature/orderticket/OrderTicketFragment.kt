@@ -1,5 +1,6 @@
 package au.cmcmarkets.ticker.feature.orderticket
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import au.cmcmarkets.ticker.R
 import au.cmcmarkets.ticker.core.di.viewmodel.ViewModelFactory
+import au.cmcmarkets.ticker.service.UpdateBitcoinChartService
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
+
 
 class OrderTicketFragment : DaggerFragment() {
 
@@ -27,14 +30,12 @@ class OrderTicketFragment : DaggerFragment() {
 
     override fun onResume() {
         super.onResume()
-
-        // TODO("Resume Polling")
+        requireActivity().startService(Intent(this.context, UpdateBitcoinChartService::class.java))
     }
 
     override fun onPause() {
+        requireActivity().stopService(Intent(this.context, UpdateBitcoinChartService::class.java))
         super.onPause()
-
-        // TODO("Stop polling")
     }
 }
 
