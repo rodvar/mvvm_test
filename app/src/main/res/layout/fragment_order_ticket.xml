@@ -1,19 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/titleTxt"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="au.cmcmarkets.ticker.feature.orderticket.OrderTicketViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@tools:sample/lorem" />
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/titleTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/default_horizontal_margin"
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/title" />
+
+        <LinearLayout
+            android:id="@+id/price_labels_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleTxt">
+
+            <TextView
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|start"
+                android:text="@string/sell_lbl"
+                android:textAllCaps="true"
+                android:textColor="@color/orange"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|end"
+                android:text="@string/buy_lbl"
+                android:textAllCaps="true"
+                android:textColor="@color/cyan"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/price_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/price_labels_container">
+
+            <TextView
+                textPrice="@{ viewModel.sellPrice }"
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="30sp"
+                tools:text="@string/no_data" />
+
+            <TextView
+                textPrice="@{ viewModel.buyPrice }"
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="30sp"
+                tools:text="@string/no_data" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_input_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/price_container">
+
+            <RelativeLayout
+                android:id="@+id/units_container"
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/unitsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/default_vertical_margin"
+                    android:layout_marginTop="@dimen/default_vertical_margin"
+                    android:layout_marginEnd="@dimen/default_vertical_margin"
+                    android:gravity="center"
+                    android:text="@string/units_lbl"
+                    android:textColor="@color/cyan"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/unitsInput"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/unitsLabel"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/default_vertical_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/default_vertical_margin"
+                    android:layout_marginBottom="@dimen/default_vertical_margin"
+                    android:background="@drawable/rounded_edit_text_bck"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:text="20" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/amount_container"
+                android:layout_width="@dimen/match_contrains"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/amountLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/default_vertical_margin"
+                    android:layout_marginTop="@dimen/default_vertical_margin"
+                    android:layout_marginEnd="@dimen/default_vertical_margin"
+                    android:gravity="center"
+                    android:text="@string/amount_lbl"
+                    android:textColor="@color/cyan"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/amountInput"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/amountLabel"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/default_vertical_margin"
+                    android:layout_marginTop="@dimen/small_margin"
+                    android:layout_marginEnd="@dimen/default_vertical_margin"
+                    android:layout_marginBottom="@dimen/default_vertical_margin"
+                    android:background="@drawable/rounded_edit_text_bck"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    tools:text="20" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/cancel_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_horizontal_margin"
+            android:background="@color/grey_bck"
+            android:text="@string/cancel_button"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/confirm_button"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/confirm_button"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_horizontal_margin"
+            android:background="@color/green_bck"
+            android:text="@string/confirm_button"
+            android:textAllCaps="false"
+            android:textSize="@dimen/button_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cancel_button" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -21,7 +21,6 @@ class UpdateBitcoinChartService : Service() {
     @Inject
     lateinit var bitcoinChartRepository: BitcoinChartRepository
 
-    private lateinit var loopThread: Thread
     private var job: Job? = null
 
     override fun onBind(intent: Intent): IBinder? {

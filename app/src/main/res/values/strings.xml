@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Bitcoin ticker</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="confirm_button">Confirm</string>
+    <string name="title">Order Ticket - UK Cash</string>
+    <string name="sell_lbl">Sell</string>
+    <string name="buy_lbl">Buy</string>
+    <string name="no_data">N/A</string>
+    <string name="units_lbl">Units</string>
+    <string name="amount_lbl">Amount (£)</string>
 
 </resources>
