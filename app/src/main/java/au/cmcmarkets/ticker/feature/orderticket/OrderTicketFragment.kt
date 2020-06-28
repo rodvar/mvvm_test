@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import au.cmcmarkets.ticker.core.di.viewmodel.ViewModelFactory
 import au.cmcmarkets.ticker.databinding.FragmentOrderTicketBinding
 import au.cmcmarkets.ticker.service.UpdateBitcoinChartService
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_order_ticket.*
 import javax.inject.Inject
 
 
@@ -30,6 +32,16 @@ class OrderTicketFragment : DaggerFragment() {
         val binding = FragmentOrderTicketBinding.inflate(inflater)
         binding.viewModel = this.viewModel
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        this.amountInput.doOnTextChanged { text, start, count, after ->
+//            unitsInput.setText(viewModel.unitsAt(text.toString().toInt()).toString())
+        }
+        this.unitsInput.doOnTextChanged { text, start, count, after ->
+//            unitsInput.setText(viewModel.amountAt(text.toString().toBigDecimal()).toString())
+        }
     }
 
     override fun onResume() {
