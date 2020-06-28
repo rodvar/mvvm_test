@@ -11,11 +11,13 @@ class OrderTicketViewModel @Inject constructor(val bitcoinChartRepository: Bitco
 
     val buyPrice = ObservableField<String>()
     val sellPrice = ObservableField<String>()
+    val spread = ObservableField<String>()
 
     init {
         bitcoinChartRepository.bitcoinPricesChartData.observeForever {
             buyPrice.set("${it.bitcoinChartPrices.GBP.buy}")
             sellPrice.set("${it.bitcoinChartPrices.GBP.sell}")
+            spread.set("${it.bitcoinChartPrices.GBP.buy.subtract(it.bitcoinChartPrices.GBP.sell)}")
         }
     }
 
