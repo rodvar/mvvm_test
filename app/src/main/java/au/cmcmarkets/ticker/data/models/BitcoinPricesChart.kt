@@ -16,9 +16,10 @@ class BitcoinPricesChart(private val bitcoinChartPrices: BitcoinPricesChartDTO) 
 
     fun spread(key: String): BigDecimal = find(key).let { it.buy.subtract(it.sell) }
 
-    fun unitsFor(ukKey: String, amount: Int): BigDecimal {
-        TODO("Not yet implemented")
-    }
+    fun unitsFor(key: String, amount: BigDecimal): BigDecimal = find(key).let { amount.div(it.buy) }
+
+    fun amountFor(key: String, units: BigDecimal): BigDecimal =
+        find(key).let { units.multiply(it.buy) }
 
     private fun find(key: String): BitcoinChartPriceDTO {
         return try {

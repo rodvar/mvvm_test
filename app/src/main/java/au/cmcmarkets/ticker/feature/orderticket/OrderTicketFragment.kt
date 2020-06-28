@@ -2,6 +2,8 @@ package au.cmcmarkets.ticker.feature.orderticket
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,9 @@ import javax.inject.Inject
 
 
 class OrderTicketFragment : DaggerFragment() {
+
+    private lateinit var unitsTextWatcher: TextWatcher
+    private lateinit var amountTextWatcher: TextWatcher
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -36,11 +41,25 @@ class OrderTicketFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        this.amountInput.doOnTextChanged { text, start, count, after ->
-//            unitsInput.setText(viewModel.unitsAt(text.toString().toInt()).toString())
+        amountTextWatcher = this.amountInput.doOnTextChanged { text, start, count, after ->
+            unitsInput.removeTextChangedListener(unitsTextWatcher)
+            try {
+                unitsInput.setText(viewModel.unitsAt(text.toString().toBigDecimal()).toString())
+            } catch (e: Exception) {
+                Log.e(javaClass.simpleName, "Failed to update unit", e)
+            } finally {
+                unitsInput.addTextChangedListener(unitsTextWatcher)
+            }
         }
-        this.unitsInput.doOnTextChanged { text, start, count, after ->
-//            unitsInput.setText(viewModel.amountAt(text.toString().toBigDecimal()).toString())
+        unitsTextWatcher = this.unitsInput.doOnTextChanged { text, start, count, after ->
+            amountInput.removeTextChangedListener(amountTextWatcher)
+            try {
+                amountInput.setText(viewModel.amountAt(text.toString().toBigDecimal()).toString())
+            } catch (e: Exception) {
+                Log.e(javaClass.simpleName, "Failed to update unit", e)
+            } finally {
+                amountInput.addTextChangedListener(amountTextWatcher)
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import au.cmcmarkets.ticker.data.models.BitcoinPricesChart
 import au.cmcmarkets.ticker.data.repository.BitcoinChartRepository
+import java.math.BigDecimal
 import javax.inject.Inject
 
 
@@ -44,8 +45,10 @@ class OrderTicketViewModel @Inject constructor(private val bitcoinChartRepositor
         spread.set("N/A")
     }
 
-//    fun unitsAt(amount: Int): BigDecimal = lastPricesChart?.unitsFor(BitcoinPricesChart.UK_KEY, amount)
+    fun unitsAt(amount: BigDecimal): BigDecimal? =
+        lastPricesChart?.unitsFor(BitcoinPricesChart.UK_KEY, amount)
 
-//    fun amountAt(units: BigDecimal): BigDecimal = lastPricesChart?.amountFor(BitcoinPricesChart.UK_KEY, units)
+    fun amountAt(units: BigDecimal): BigDecimal? =
+        lastPricesChart?.amountFor(BitcoinPricesChart.UK_KEY, units)
 
 }

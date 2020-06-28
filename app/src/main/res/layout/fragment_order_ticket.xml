@@ -181,7 +181,7 @@
                     android:layout_marginTop="@dimen/small_margin"
                     android:layout_marginEnd="@dimen/default_vertical_margin"
                     android:layout_marginBottom="@dimen/default_vertical_margin"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:background="@drawable/rounded_edit_text_bck"
                     android:gravity="center"
                     android:textColor="@color/white"
