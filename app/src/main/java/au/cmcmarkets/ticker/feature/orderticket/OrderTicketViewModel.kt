@@ -2,11 +2,12 @@ package au.cmcmarkets.ticker.feature.orderticket
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
+import au.cmcmarkets.ticker.data.models.BitcoinPricesChart
 import au.cmcmarkets.ticker.data.repository.BitcoinChartRepository
 import javax.inject.Inject
 
 
-class OrderTicketViewModel @Inject constructor(val bitcoinChartRepository: BitcoinChartRepository) :
+class OrderTicketViewModel @Inject constructor(private val bitcoinChartRepository: BitcoinChartRepository) :
     ViewModel() {
 
     val buyPrice = ObservableField<String>()
@@ -15,9 +16,9 @@ class OrderTicketViewModel @Inject constructor(val bitcoinChartRepository: Bitco
 
     init {
         bitcoinChartRepository.bitcoinPricesChartData.observeForever {
-            buyPrice.set("${it.bitcoinChartPrices.GBP.buy}")
-            sellPrice.set("${it.bitcoinChartPrices.GBP.sell}")
-            spread.set("${it.bitcoinChartPrices.GBP.buy.subtract(it.bitcoinChartPrices.GBP.sell)}")
+            buyPrice.set("${it.buy(BitcoinPricesChart.UK_KEY)}")
+            sellPrice.set("${it.sell(BitcoinPricesChart.UK_KEY)}")
+            spread.set("${it.spread(BitcoinPricesChart.UK_KEY)}")
         }
     }
 
