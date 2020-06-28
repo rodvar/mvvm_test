@@ -2,6 +2,7 @@ package au.cmcmarkets.ticker.utils
 
 import android.content.Context
 import android.text.Html
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -22,11 +23,16 @@ fun View?.hideKeyboard() {
 
 @BindingAdapter("textPrice")
 fun TextView?.setTextPrice(text: String?) {
-    text?.toBigDecimal()?.let {
-        this?.text = Html.fromHtml(
-            "<b>" + it.toBigInteger() + "</b>" + "<small>." +
-                    it.subtract(it.toBigInteger().toBigDecimal()).multiply(100.toBigDecimal())
-                        .toBigInteger() + "</small>"
-        )
+    try {
+        text?.toBigDecimal()?.let {
+            this?.text = Html.fromHtml(
+                "<b>" + it.toBigInteger() + "</b>" + "<small>." +
+                        it.subtract(it.toBigInteger().toBigDecimal()).multiply(100.toBigDecimal())
+                            .toBigInteger() + "</small>"
+            )
+        }
+    } catch (e: Exception) {
+        Log.e("text price", "Failed to set text price", e)
+        this?.text = text
     }
 }
