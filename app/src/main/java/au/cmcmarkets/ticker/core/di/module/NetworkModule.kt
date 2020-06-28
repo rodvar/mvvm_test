@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -16,6 +17,7 @@ class NetworkModule {
 
     companion object {
         private const val API_BASE_URL = "https://blockchain.info"
+        private const val DEFAULT_NETWORK_TIMEOUT = 3L
     }
 
     private val httpLoggingInterceptor: HttpLoggingInterceptor by lazy {
@@ -37,6 +39,8 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
+            .connectTimeout(DEFAULT_NETWORK_TIMEOUT, TimeUnit.SECONDS)
+            .readTimeout(DEFAULT_NETWORK_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
             .build()
     }

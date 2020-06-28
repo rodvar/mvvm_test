@@ -8,5 +8,7 @@
     <string name="no_data">N/A</string>
     <string name="units_lbl">Units</string>
     <string name="amount_lbl">Amount (£)</string>
+    <string name="retry">Retry</string>
+    <string name="data_unavailable_error">Unable to get updated prices from server.</string>
 
 </resources>

@@ -8,10 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
+import androidx.databinding.Observable
 import androidx.lifecycle.ViewModelProvider
+import au.cmcmarkets.ticker.R
 import au.cmcmarkets.ticker.core.di.viewmodel.ViewModelFactory
 import au.cmcmarkets.ticker.databinding.FragmentOrderTicketBinding
 import au.cmcmarkets.ticker.service.UpdateBitcoinChartService
+import au.cmcmarkets.ticker.utils.toast
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_order_ticket.*
 import javax.inject.Inject
@@ -41,7 +44,22 @@ class OrderTicketFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        amountTextWatcher = this.amountInput.doOnTextChanged { text, start, count, after ->
+        this.setupInputWatchers()
+        this.retryButton.setOnClickListener {
+            context.toast("Retrying..")
+            this.viewModel.reloadPrices()
+        }
+        this.viewModel.retryFailed.addOnPropertyChangedCallback(object :
+            Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if (viewModel.retryFailed.get()!!)
+                    context.toast(getString(R.string.data_unavailable_error))
+            }
+        })
+    }
+
+    private fun setupInputWatchers() {
+        amountTextWatcher = this.amountInput.doOnTextChanged { text, _, _, _ ->
             unitsInput.removeTextChangedListener(unitsTextWatcher)
             try {
                 unitsInput.setText(viewModel.unitsAt(text.toString().toBigDecimal()).toString())
@@ -51,7 +69,7 @@ class OrderTicketFragment : DaggerFragment() {
                 unitsInput.addTextChangedListener(unitsTextWatcher)
             }
         }
-        unitsTextWatcher = this.unitsInput.doOnTextChanged { text, start, count, after ->
+        unitsTextWatcher = this.unitsInput.doOnTextChanged { text, _, _, _ ->
             amountInput.removeTextChangedListener(amountTextWatcher)
             try {
                 amountInput.setText(viewModel.amountAt(text.toString().toBigDecimal()).toString())
